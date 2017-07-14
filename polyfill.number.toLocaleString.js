@@ -13,7 +13,8 @@
         } catch (e) {
             return e.name === "RangeError";
         }
-        return false;
+        // check incorrect realizations in node.js for example
+        return 1234.56.toLocaleString("ru-RU") !== '1\u00A0234,56';
     }
 
     if (!toLocaleStringSupportsLocales()) {
@@ -86,6 +87,14 @@
             return replaceSeparators(sNum, seperators);
         };
 
+        var spaceCurrencyFormat = function(sFormat) {
+          return sFormat.replace(' ','\u00A0');
+        };
+
+        var doNothing = function(sFormat){
+          return sFormat;
+        };
+
         var transformForLocale = {
             en: commaThousDotDec,
             it: dotThousCommaDec,
@@ -124,6 +133,12 @@
             "ru-RU": "post",
             "da-DK": "post",
             "nb-NO": "post"
+        };
+
+        var currencyFormatDelimiters = {
+            en: doNothing,
+            ru: spaceCurrencyFormat,
+            "ru-RU": spaceCurrencyFormat
         };
 
         var currencySymbols = {
@@ -265,7 +280,8 @@
             sNum = mapMatch(transformForLocale, locale)(sNum, options);
 
             if(options && options.currency && options.style === "currency") {
-                var format = currencyFormats[mapMatch(currencyFormatMap, locale)];
+                var formatCommon = currencyFormats[mapMatch(currencyFormatMap, locale)];
+                var format = mapMatch(currencyFormatDelimiters, locale)(formatCommon);
                 if(options.currencyDisplay === "code") {
                     sNum = renderFormat(format, {
                         num: sNum,
