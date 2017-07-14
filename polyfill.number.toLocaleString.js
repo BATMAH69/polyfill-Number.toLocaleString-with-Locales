@@ -9,13 +9,17 @@
     function toLocaleStringSupportsLocales() {
         var number = 0;
         try {
+                // check incorrect realizations in node.js for example
+                if (1234.56.toLocaleString("ru-RU") !== '1\u00A0234,56'){
+                return false;
+            }
+            // check availability
             number.toLocaleString("i");
         } catch (e) {
             return e.name === "RangeError";
         }
-        // check incorrect realizations in node.js for example
-        return 1234.56.toLocaleString("ru-RU") !== '1\u00A0234,56';
-    }
+        return false;
+      }
 
     if (!toLocaleStringSupportsLocales()) {
         var replaceSeparators = function(sNum, separators) {
