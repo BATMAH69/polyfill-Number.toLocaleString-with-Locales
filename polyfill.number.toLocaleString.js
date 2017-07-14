@@ -100,6 +100,8 @@
             "ro-RO": dotThousCommaDec,
             hu: spaceThousCommaDec,
             "hu-HU": spaceThousCommaDec,
+            ru: spaceThousCommaDec,
+            "ru-RU": spaceThousCommaDec,
             "da-DK": dotThousCommaDec,
             "nb-NO": spaceThousCommaDec
         };
@@ -118,6 +120,8 @@
             "ro-RO": "post",
             hu: "post",
             "hu-HU": "post",
+            ru: "post",
+            "ru-RU": "post",
             "da-DK": "post",
             "nb-NO": "post"
         };

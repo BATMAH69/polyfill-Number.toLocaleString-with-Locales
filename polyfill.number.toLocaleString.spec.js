@@ -163,6 +163,11 @@ describe('number.toLocaleString(locale) polyfill', function() {
             currency: "huf"
         })).toBe("1\u00A0234,56 Ft");
 
+        expect(num.toLocaleString("ru-RU", {
+          style: style,
+          currency: "RUB"
+        })).toBe("1\u00A0234,56 ₽");
+
         expect(num.toLocaleString("da-DK", {
             style: style,
             currency: "DKK"
